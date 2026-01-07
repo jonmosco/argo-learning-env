@@ -9,7 +9,7 @@ ARGO_ROLLOUTS_VERSION="v1.8.3"
 CLUSTER_NAME="argo-learning"
 
 function up() {
-    kind create cluster --name "${CLUSTER_NAME}" --config argo-cluster-config.yaml
+    kind create cluster --name "${CLUSTER_NAME}" --config argo-kind-config.yaml
 
     # Install ArgoCD
     kubectl create namespace argocd

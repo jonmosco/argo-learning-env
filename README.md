@@ -31,7 +31,7 @@ chmod +x argo-lab.sh
 
 ##  Project Structure
 
-* `kind-config.yaml`: Defines the cluster and "bakes in" the port mappings for your host machine.
+* `argo-kind-config.yaml`: Defines the cluster and the port mappings for your host machine.
 * `argo-lab.sh`: The automation script that handles cluster creation, namespace setup, app installation, and service patching.
 
 ## Commands
@@ -43,10 +43,9 @@ chmod +x argo-lab.sh
 
 ## Notes
 
-* **SSL Warning:** When opening ArgoCD, your browser will show an SSL warning (due to self-signed certs). Click **Advanced** -> **Proceed** (or type `thisisunsafe` in Chrome).
+* **SSL Warning:** When opening ArgoCD, your browser will show an SSL warning (due to self-signed certs).
 * **Auth:** Argo Workflows is configured in `server` auth mode for easy learning (no login token required).
-
-**Note for Podman users:**  Ensure your Podman machine is started and the `KIND_EXPERIMENTAL_PROVIDER` env variable is set if using older versions of Kind.
+* **For Podman users:**  Ensure your Podman machine is started and the `KIND_EXPERIMENTAL_PROVIDER` env variable is set if using older versions of Kind.
 
 ```bash
 podman machine start
