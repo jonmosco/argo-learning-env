@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to bring up the kind cluster and install ArgoCD, Argo Workflows, and Argo Events
+# Script to bring up a kind cluster and install ArgoCD, Argo Workflows, and Argo Events
 
 ARGO_WORKFLOWS_VERSION="v3.7.6"
 ARGO_ROLLOUTS_VERSION="v1.8.3"
@@ -49,11 +49,8 @@ function up() {
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     echo "Argo Workflows UI:     http://localhost:2746"
     echo ""
-    echo "Argo Rollouts UI:"
-    echo ""
-    echo "  Note: The Rollouts UI is a local dashboard."
+    echo "  The Rollouts UI is a local dashboard."
     echo "  To start it, run: kubectl argo rollouts dashboard"
-    echo "  Then visit: http://localhost:3100"
     echo ""
     echo "NOTE: Services may still be pulling images or starting up."
     echo "      Run 'kubectl get pods -A' to monitor status until everything is 'Running'."

@@ -5,10 +5,6 @@ nodes:
 - role: control-plane
   extraPortMappings:
   # ArgoCD UI
-  # NOTE: Must patch the service to use this port:
-  # kubectl patch svc \
-  # argocd-server -n argocd \
-  #  -p '{"spec": {"type": "NodePort", "ports": [{"port": 443, "nodePort": 30443}]}}'
   - containerPort: 30443  # Changed from 443
     hostPort: 8080
     protocol: TCP
