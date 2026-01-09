@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-app-test
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jonmosco/LFS256-code
+    targetRevision: HEAD
+    path: argocd/example-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test
