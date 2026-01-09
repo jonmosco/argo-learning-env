@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/jonmosco/LFS256-code
+    repoURL: https://github.com/jonmosco/argo-learning-env
     targetRevision: HEAD
-    path: argocd/example-app/production
+    path: argo-cd/example-app/production
   destination:
     server: https://kubernetes.default.svc
     namespace: production

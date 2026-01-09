@@ -8,6 +8,52 @@ ARGO_ROLLOUTS_VERSION="v1.8.3"
 # Cluster name is in the kind config yaml
 CLUSTER_NAME="argo-learning"
 
+function help() {
+cat <<EOF
+Usage:
+  $0 up        Create cluster and install Argo components
+  $0 down      Delete the cluster
+  $0 info      Re-print URLs and admin password
+  $0 help      Show this help
+
+Access:
+  ArgoCD UI:         https://localhost:8080
+  Argo Workflows UI: http://localhost:2746
+
+Notes:
+  - Ports are forwarded via the kind config
+  - 'info' only reads existing secrets (safe to run anytime)
+
+Examples:
+  $0 up
+  $0 info
+  $0 down
+EOF
+}
+
+
+function print_info() {
+    echo ""
+    echo "---------------------------------------------------"
+    echo ""
+    echo "ArgoCD UI:             https://localhost:8080"
+    echo -n "ArgoCD Admin Password: "
+
+    if kubectl -n argocd get secret argocd-initial-admin-secret >/dev/null 2>&1; then
+        kubectl -n argocd get secret argocd-initial-admin-secret \
+          -o jsonpath="{.data.password}" | base64 -d; echo
+    else
+        echo "<not found – is the cluster running?>"
+    fi
+
+    echo "Argo Workflows UI:     http://localhost:2746"
+    echo ""
+    echo "  Rollouts dashboard:"
+    echo "  kubectl argo rollouts dashboard"
+    echo ""
+    echo "---------------------------------------------------"
+}
+
 function up() {
     kind create cluster --name "${CLUSTER_NAME}" --config argo-kind-config.yaml
 
@@ -66,7 +112,14 @@ case "$1" in
         echo "Deleting cluster '$CLUSTER_NAME'"
         kind delete cluster --name $CLUSTER_NAME
         ;;
+    info)
+        print_info
+        ;;
+    help|-h|--help|"")
+        help
+        ;;
     *)
-        echo "Usage: $0 {up|down}"
+        echo "Unknown command: $1"
+        help
         exit 1
 esac
