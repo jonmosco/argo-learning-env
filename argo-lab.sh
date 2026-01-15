@@ -103,8 +103,8 @@ function install_argo_events() {
 function wait_for_components() {
     # Wait for services and CRDs to initialize
     echo ""
-    echo "Waiting 45 seconds for CRDs and Controllers to finish installing"
-    sleep 45
+    echo "Waiting 60 seconds for CRDs and Controllers to finish installing"
+    sleep 60
 }
 
 function up() {
