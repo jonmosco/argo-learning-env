@@ -78,11 +78,6 @@ function install_workflows() {
     kubectl create namespace argo
     kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/${ARGO_WORKFLOWS_VERSION}/install.yaml
 
-    # Wait for services and CRDs to initialize
-    echo ""
-    echo "Waiting 45 seconds for CRDs and Controllers to finish installing"
-    sleep 45
-
     # Patch Argo Workflows for Port 2746 access (NodePort 32746)
     # Also switches auth-mode to 'server' so you can skip local login tokens
     kubectl patch svc argo-server -n argo -p '{"spec": {"type": "NodePort", "ports": [{"name": "web", "port": 2746, "targetPort": 2746, "nodePort": 32746}]}}'
@@ -113,6 +108,11 @@ function up() {
     install_workflows
     install_rollouts
     install_argo_events
+
+    # Wait for services and CRDs to initialize
+    echo ""
+    echo "Waiting 45 seconds for CRDs and Controllers to finish installing"
+    sleep 45
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
