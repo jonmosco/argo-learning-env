@@ -100,6 +100,13 @@ function install_argo_events() {
     kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
 }
 
+function wait_for_components() {
+    # Wait for services and CRDs to initialize
+    echo ""
+    echo "Waiting 45 seconds for CRDs and Controllers to finish installing"
+    sleep 45
+}
+
 function up() {
     echo "Creating hub cluster: ${HUB_CLUSTER}"
     kind create cluster --name "${HUB_CLUSTER}" --config argo-kind-config-hub.yaml
@@ -108,11 +115,7 @@ function up() {
     install_workflows
     install_rollouts
     install_argo_events
-
-    # Wait for services and CRDs to initialize
-    echo ""
-    echo "Waiting 45 seconds for CRDs and Controllers to finish installing"
-    sleep 45
+    wait_for_components
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
@@ -145,6 +148,7 @@ function up_multi() {
     install_workflows
     install_rollouts
     install_argo_events
+    wait_for_components
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
