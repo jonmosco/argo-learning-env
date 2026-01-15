@@ -165,11 +165,8 @@ function up_multi() {
     echo "Spoke Cluster Created: ${SPOKE_CLUSTER}"
     echo "====================================================="
     echo ""
-    echo "Current kubectl context:"
-    kubectl config current-context
-    echo ""
-    echo "Kubernetes contexts available:"
-    kubectl config get-contexts
+    echo "Kind Clusters:"
+    kind get clusters | sed 's/^/  /'
     echo ""
     echo "To register the spoke cluster with hub ArgoCD, run:"
     echo ""
