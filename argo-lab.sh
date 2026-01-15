@@ -175,6 +175,9 @@ function up_multi() {
     echo "Creating spoke cluster: ${SPOKE_CLUSTER}"
     kind create cluster --name "${SPOKE_CLUSTER}" --config argo-kind-config-spoke.yaml
 
+    # Switch context back to hub
+    kubectl config use-context "kind-${HUB_CLUSTER}"
+
     echo ""
     echo ""
     echo "====================================================="
@@ -184,9 +187,10 @@ function up_multi() {
     echo "Kind Clusters:"
     kind get clusters | sed 's/^/  /'
     echo ""
+    echo "Current context: kind-${HUB_CLUSTER}"
+    echo ""
     echo "To register the spoke cluster with hub ArgoCD, run:"
     echo ""
-    echo "  kubectl config use-context kind-${HUB_CLUSTER}"
     echo "  argocd cluster add kind-${SPOKE_CLUSTER}"
     echo ""
     echo "Or use the ArgoCD UI to add the cluster:"
