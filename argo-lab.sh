@@ -144,7 +144,7 @@ function up_multi() {
     install_argocd
     install_workflows
     install_rollouts
- .  install_argo_events
+    install_argo_events
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
