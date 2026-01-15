@@ -95,6 +95,16 @@ function install_rollouts() {
     kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/download/${ARGO_ROLLOUTS_VERSION}/install.yaml
 }
 
+function install_argo_events() {
+    # Install Argo Events
+    kubectl create namespace argo-events
+    kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
+    kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
+    # Install with a validating admission controller
+    kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install-validating-webhook.yaml
+    kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
+}
+
 function up() {
     echo "Creating hub cluster: ${HUB_CLUSTER}"
     kind create cluster --name "${HUB_CLUSTER}" --config argo-kind-config-hub.yaml
@@ -102,6 +112,7 @@ function up() {
     install_argocd
     install_workflows
     install_rollouts
+    install_argo_events
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
@@ -133,6 +144,7 @@ function up_multi() {
     install_argocd
     install_workflows
     install_rollouts
+ .  install_argo_events
 
     # Set current namespace to argocd
     kubectl config set-context --current --namespace=argocd
