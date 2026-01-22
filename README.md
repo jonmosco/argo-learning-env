@@ -80,6 +80,7 @@ For learning multicluster deployments with ArgoCD:
 
 * **SSL Warning:** When opening ArgoCD, your browser will show an SSL warning (due to self-signed certs).
 * **Auth:** Argo Workflows is configured in `server` auth mode for easy learning (no login token required).
+* **Rollouts CLI:** The `kubectl argo rollouts` commands require the [kubectl-argo-rollouts plugin](https://argo-rollouts.readthedocs.io/en/stable/installation/); install it before running the dashboard.
 * **For Podman users:**  Ensure your Podman machine is started and the `KIND_EXPERIMENTAL_PROVIDER` env variable is set if using older versions of Kind.
 
 ```bash

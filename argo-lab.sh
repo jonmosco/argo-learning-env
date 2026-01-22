@@ -129,7 +129,7 @@ function up() {
     echo "ArgoCD UI:             https://localhost:8080"
     echo -n "ArgoCD Admin Password: "
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-    echo "Argo Workflows UI:     http://localhost:2746"
+    echo "Argo Workflows UI:     https://localhost:2746"
     echo ""
     echo "  The Rollouts UI is a local dashboard."
     echo "  To start it, run: kubectl argo rollouts dashboard"
